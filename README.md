@@ -1,14 +1,12 @@
-# Serverless Jazz HR Connection
+# Serverless Greenhouse HR Connection
 
 This function is deployed using the [Serverless framework](https://serverless.com/) to AWS Lambda. 
 
-Because the v1 of Jazz's HR API can only be used in a server environment this function is the connection between the careers posted on Gatsbyjs.com and Gatsby's account on the Jazz portal.
+Because the v1 of Greenhouse's HR API needs to be proxied this function is the connection between the careers posted on Gatsbyjs.com and Gatsby's account on the Greenhouse portal.
 
 ## What it does
 
-The function in `handler.js` simply forwards the data received from the JazzHrForm component on .com on to Jazz's post applicant endpoint.
-
-The API has some limitations like only being able to post to specific fields (custom fields and workflows defined by a user aren't "postable", of which we have several), meaning some fields get posted to other fields that are generally unused as a work around. What fields did and did not work were mostly ascertained by guess and check since it's not documented by Jazz.
+The function in `handler.js` forwards the data received from the Greenhouse Form component on .com on to Greenhouse's post applicant endpoint.
 
 ## Deploying
 
@@ -28,10 +26,10 @@ A successful deployment will return a message like this:
 
 ```
 Service Information
-service: jazz
+service: greenhouse
 stage: prod
 region: us-east-1
-stack: jazz-prod
+stack: greenhouse-prod
 resources: 17
 api keys:
   None
