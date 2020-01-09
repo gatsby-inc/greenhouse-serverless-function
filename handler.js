@@ -4,6 +4,7 @@ const axios = require('axios')
 const boardToken = `gatsby`
 const b64EncodedToken = Buffer.from(process.env.GATSBY_GREENHOUSE_KEY).toString('base64')
 
+
 module.exports.postApplication = async (event, context) => {
   let body;
   let jobId;
@@ -11,6 +12,9 @@ module.exports.postApplication = async (event, context) => {
     body = JSON.parse(event.body);
     jobId = body.jobId
   }
+  console.log("///////////// BODY //////////////////")
+  console.log(body)
+  console.log("///////////// BODY //////////////////")
   console.log(jobId)
   const headers = {
     'Access-Control-Allow-Origin': '*',
@@ -19,26 +23,25 @@ module.exports.postApplication = async (event, context) => {
     'Authorization': `Basic ${b64EncodedToken}`,
   };
   console.log("Posting...")
-  await axios
-  .post(
-    `https://boards-api.greenhouse.io/v1/boards/${boardToken}/jobs/4006211003`,
-    // `https://boards-api.greenhouse.io/v1/boards/${boardToken}/jobs/${jobId}`,
+  const response = await axios.post(
+    `https://boards-api.greenhouse.io/v1/boards/${boardToken}/jobs/${jobId}`,
     {
-      "first_name": "Testy",
-      "last_name": "Turner",
-      "email": "kyle.gill+test@gatsbyjs.com",
-      "phone": "3337778888",
-      "location": "110 5th Ave New York, NY, 10011",
-      "latitude": "40.7376671",
-      "longitude": "-73.9929196",
-      "resume_text": "I have many years of experience as an expert basket weaver...",
-      "cover_letter_text": "I have a very particular set of skills, skills I have acquired over a very long career. Skills that make me..."
+      // "first_name": body["fist_name"],
+      // "last_name": body["last_name"],
+      // "email": body["email"],
+      // "phone": body["phone"],
+      ...body,
+      "question_4029957003": "United States of America",
+      "resume_content_filename": "resume.pdf",
     },
     {
       headers,
     }
   )
   .then(result => {
+    console.log("-------result----------")
+    console.log(result)
+    console.log("-------result----------")
     return {
       headers,
       statusCode: 200,
@@ -60,5 +63,7 @@ module.exports.postApplication = async (event, context) => {
       }),
     }
   })  
+  console.log(response)
   console.log("Ending...")
+  return response
 };
