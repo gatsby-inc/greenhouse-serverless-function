@@ -20,22 +20,18 @@ module.exports.postApplication = async (event, context) => {
     'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Credentials': true,
     'Content-Type': 'application/json',
-    'Authorization': `Basic ${b64EncodedToken}`,
   };
   console.log("Posting...")
   const response = await axios.post(
     `https://boards-api.greenhouse.io/v1/boards/${boardToken}/jobs/${jobId}`,
     {
-      // "first_name": body["fist_name"],
-      // "last_name": body["last_name"],
-      // "email": body["email"],
-      // "phone": body["phone"],
       ...body,
-      "question_4029957003": "United States of America",
-      "resume_content_filename": "resume.pdf",
     },
     {
-      headers,
+      headers: {
+        ...headers,
+        'Authorization': `Basic ${b64EncodedToken}`,
+      },
     }
   )
   .then(result => {
@@ -46,7 +42,7 @@ module.exports.postApplication = async (event, context) => {
       headers,
       statusCode: 200,
       body: JSON.stringify({
-        message: 'JazzHR Application posted successfully',
+        message: 'Application posted successfully',
       }),
     };
   })
@@ -58,8 +54,8 @@ module.exports.postApplication = async (event, context) => {
       headers,
       statusCode: 500,
       body: JSON.stringify({
-        error,
-        message: 'JazzHR Application failed to post',
+        error: error.message,
+        message: 'Application failed to post',
       }),
     }
   })  
