@@ -47,6 +47,8 @@ serverless deploy --stage prod --function postApplication
 
 Which would be deployed to `prod` because of the `--stage` flag.
 
+This function is currently deployed on Gatsby's AWS organization. You can find API access credentials to the organization for Dustin's user on 1Pass.
+
 ## Developing
 
 The function can be invoked locally, and you can pass in mock data from a file like `data.json` with this command:
